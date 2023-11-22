@@ -14,27 +14,36 @@ def inheritance_basics():
         def __init__(self, name, age):
             self.name = name
             self.age = age
-            self.country = 'Pakistan'
+            self.country = 'Pakistan'  # Protected Variable.
+            self.__private = 'secret'  # Private variable
 
         def __str__(self):
-            return 'Hello to Person Class'
+            return f'Hello to Person Class {self.name}'
 
     class Employee(Person):
         # Need to assign Values otherwise through Error.
-        def __init__(self):
-            Person.name = 'Hassan'
-            Person.age = '21'
+        def __init__(self, name, age):
+            Person.__init__(self, name, age)
+            Person.name = 'Hassan'  # not work
+            Person.age = '21'       # not work, logic.
+
+            print(self.country)     # work.
+            print(self.__private)   # Through error.
+
+
+
 
         @staticmethod
         def show():
             print('Its Employee Class')
 
     # Objects / Instance
-    emp1 = Employee()
+    emp1 = Employee('hassan', 22)
     print(emp1)
     emp1.show()
     print(emp1.name)
-    print(emp1.country)  # Through error. Not recognize.
+    print(emp1.country)  # Now, it works
+    print(emp1.__private)  # Now, it not work, through error.
 
 
 # ====== Inheritance Super Keyword ======= #
@@ -68,10 +77,10 @@ def super_keyword():
     # Objects / Instance
     emp1 = Employee('Ali', 22, 'Real Estate Agent')
     print(emp1.show())
-    print(emp1)
+    print(emp1)  # gives Hassan
     print(emp1.is_employee())
 
 
 if __name__ == '__main__':
-    # inheritance_basics()
-    super_keyword()
+    inheritance_basics()
+    # super_keyword()
